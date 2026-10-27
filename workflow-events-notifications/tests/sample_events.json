@@ -1,0 +1,42 @@
+[
+    {
+      "name": "success_case_below_threshold",
+      "event": {
+        "eventType": "statement.uploaded",
+        "userId": "user-101",
+        "uploadId": "upload-101",
+        "fileKey": "statements/user-101/upload-101.pdf",
+        "transactions": [
+          { "amount": 100, "category": "Food" },
+          { "amount": 150, "category": "Transport" },
+          { "amount": 200, "category": "Shopping" }
+        ],
+        "threshold": 1000
+      }
+    },
+    {
+      "name": "threshold_exceeded_case",
+      "event": {
+        "eventType": "statement.uploaded",
+        "userId": "user-202",
+        "uploadId": "upload-202",
+        "fileKey": "statements/user-202/upload-202.pdf",
+        "transactions": [
+          { "amount": 500, "category": "Food" },
+          { "amount": 800, "category": "Travel" },
+          { "amount": 300, "category": "Shopping" }
+        ],
+        "threshold": 1000
+      }
+    },
+    {
+      "name": "minimal_backend_payload_case",
+      "event": {
+        "eventType": "statement.uploaded",
+        "userId": "user-303",
+        "uploadId": "upload-303",
+        "fileKey": "statements/user-303/upload-303.pdf",
+        "threshold": 1000
+      }
+    }
+  ]

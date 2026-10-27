@@ -1,0 +1,23 @@
+{
+  "userId": "user-123",
+  "transactions": [
+    {
+      "transactionId": "txn-001",
+      "date": "2026-04-02",
+      "merchant": "Safeway",
+      "amount": 32.40,
+      "category": "Groceries",
+      "paymentMethod": "Debit Card",
+      "uploadId": "upload-abc"
+    },
+    {
+      "transactionId": "txn-002",
+      "date": "2026-04-03",
+      "merchant": "Uber",
+      "amount": 18.75,
+      "category": "Transport",
+      "paymentMethod": "Credit Card",
+      "uploadId": "upload-abc"
+    }
+  ]
+}

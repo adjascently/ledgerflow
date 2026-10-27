@@ -1,0 +1,98 @@
+{
+  "Comment": "Statement processing workflow for Smart Personal Finance Tracker",
+  "StartAt": "SendMessageToSQS",
+  "States": {
+    "SendMessageToSQS": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sqs:sendMessage",
+      "Parameters": {
+        "QueueUrl": "https://sqs.us-east-2.amazonaws.com/972841066670/finance-tracker-statement-queue",
+        "MessageBody.$": "$"
+      },
+      "Next": "ProcessStatement",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "Next": "NotifyFailure"
+        }
+      ]
+    },
+    "ProcessStatement": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:us-east-2:972841066670:function:finance-tracker-processor-lambda",
+        "Payload.$": "$"
+      },
+      "ResultPath": "$.lambdaResult",
+      "Retry": [
+        {
+          "ErrorEquals": [
+            "Lambda.ServiceException",
+            "Lambda.AWSLambdaException",
+            "Lambda.SdkClientException",
+            "States.TaskFailed"
+          ],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 2,
+          "BackoffRate": 2.0
+        }
+      ],
+      "Next": "CheckThreshold",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "Next": "NotifyFailure"
+        }
+      ]
+    },
+    "CheckThreshold": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.lambdaResult.Payload.thresholdExceeded",
+          "BooleanEquals": true,
+          "Next": "NotifyThresholdExceeded"
+        }
+      ],
+      "Default": "NotifySuccess"
+    },
+    "NotifyThresholdExceeded": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sns:publish",
+      "Parameters": {
+        "TopicArn": "arn:aws:sns:us-east-2:972841066670:finance-tracker-alert-topic",
+        "Subject": "Finance Tracker Workflow - Threshold Exceeded",
+        "Message.$": "States.JsonToString($.lambdaResult.Payload)"
+      },
+      "Next": "Success"
+    },
+    "NotifySuccess": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sns:publish",
+      "Parameters": {
+        "TopicArn": "arn:aws:sns:us-east-2:972841066670:finance-tracker-alert-topic",
+        "Subject": "Finance Tracker Workflow - Statement Processed",
+        "Message.$": "States.JsonToString($.lambdaResult.Payload)"
+      },
+      "Next": "Success"
+    },
+    "NotifyFailure": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::sns:publish",
+      "Parameters": {
+        "TopicArn": "arn:aws:sns:us-east-2:972841066670:finance-tracker-alert-topic",
+        "Subject": "Finance Tracker Workflow - Processing Failed",
+        "Message.$": "States.JsonToString($)"
+      },
+      "Next": "FailState"
+    },
+    "Success": {
+      "Type": "Succeed"
+    },
+    "FailState": {
+      "Type": "Fail",
+      "Cause": "Workflow failed during statement processing"
+    }
+  }
+}

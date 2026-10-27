@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="1450" viewBox="0 0 2200 1450" role="img" aria-labelledby="title desc">
+  <title id="title">Smart Personal Finance Tracker AWS Architecture</title>
+  <desc id="desc">Architecture diagram showing Amplify frontend, Cognito, API Gateway, Lambda backend, DynamoDB, S3, event workflow, RDS analytics, Secrets Manager, SageMaker hook, and CloudWatch monitoring.</desc>
+  <defs>
+    <style>
+      .title { font: 700 52px Arial, Helvetica, sans-serif; fill: #173d33; }
+      .subtitle { font: 700 30px Arial, Helvetica, sans-serif; fill: #53786d; }
+      .section { font: 700 30px Arial, Helvetica, sans-serif; fill: #173d33; }
+      .box-title { font: 700 28px Arial, Helvetica, sans-serif; fill: #173d33; }
+      .box-text { font: 22px Arial, Helvetica, sans-serif; fill: #53786d; }
+      .label { font: 20px Arial, Helvetica, sans-serif; fill: #53786d; }
+      .bullet { font: 20px Arial, Helvetica, sans-serif; fill: #53786d; }
+      .box { stroke: #d6e6df; stroke-width: 3; rx: 24; ry: 24; }
+      .arrow { stroke: #2f7d5a; stroke-width: 6; fill: none; }
+    </style>
+    <marker id="arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <polygon points="0,0 12,6 0,12" fill="#2f7d5a" />
+    </marker>
+  </defs>
+
+  <rect width="2200" height="1450" fill="#f7faf8" />
+
+  <text x="70" y="95" class="title">Smart Personal Finance Tracker</text>
+  <text x="72" y="150" class="subtitle">AWS architecture for the public web app, event pipeline, analytics, and monitoring</text>
+
+  <rect x="80" y="210" width="420" height="150" class="box" fill="#d7f3e4" />
+  <text x="104" y="255" class="box-title">AWS Amplify Hosting</text>
+  <text x="104" y="296" class="box-text">React + Vite public web app</text>
+  <text x="104" y="326" class="box-text">BrowserRouter SPA</text>
+
+  <rect x="620" y="210" width="350" height="150" class="box" fill="#e2f0ff" />
+  <text x="644" y="255" class="box-title">Amazon Cognito</text>
+  <text x="644" y="296" class="box-text">Sign up</text>
+  <text x="644" y="326" class="box-text">Login and user sessions</text>
+
+  <rect x="1090" y="210" width="390" height="150" class="box" fill="#f4e7d3" />
+  <text x="1114" y="255" class="box-title">Amazon API Gateway</text>
+  <text x="1114" y="296" class="box-text">REST APIs for app, uploads,</text>
+  <text x="1114" y="326" class="box-text">transactions, alerts, analytics</text>
+
+  <rect x="80" y="470" width="390" height="180" class="box" fill="#f4e7d3" />
+  <text x="104" y="515" class="box-title">Backend Lambda APIs</text>
+  <text x="104" y="556" class="box-text">Create/Get user profile</text>
+  <text x="104" y="586" class="box-text">Upload URL + transaction CRUD</text>
+  <text x="104" y="616" class="box-text">Monthly summary + category spend</text>
+
+  <rect x="540" y="470" width="440" height="180" class="box" fill="#eee8ff" />
+  <text x="564" y="515" class="box-title">Analytics and ML Lambdas</text>
+  <text x="564" y="556" class="box-text">Analytics overview</text>
+  <text x="564" y="586" class="box-text">Predictions endpoint</text>
+  <text x="564" y="616" class="box-text">RDS aggregate writes</text>
+
+  <rect x="1080" y="470" width="380" height="150" class="box" fill="#eaf5ef" />
+  <text x="1104" y="515" class="box-title">DynamoDB</text>
+  <text x="1104" y="556" class="box-text">UsersTable</text>
+  <text x="1104" y="586" class="box-text">TransactionsTable and UploadsTable</text>
+
+  <rect x="1530" y="470" width="380" height="150" class="box" fill="#eaf5ef" />
+  <text x="1554" y="515" class="box-title">Amazon S3</text>
+  <text x="1554" y="556" class="box-text">Statements bucket</text>
+  <text x="1554" y="586" class="box-text">Pre-signed upload target</text>
+
+  <rect x="1080" y="680" width="380" height="150" class="box" fill="#eee8ff" />
+  <text x="1104" y="725" class="box-title">Amazon RDS MySQL</text>
+  <text x="1104" y="766" class="box-text">Reporting database</text>
+  <text x="1104" y="796" class="box-text">Aggregated analytics tables</text>
+
+  <rect x="1530" y="680" width="380" height="150" class="box" fill="#eee8ff" />
+  <text x="1554" y="725" class="box-title">Secrets Manager</text>
+  <text x="1554" y="766" class="box-text">DB credentials</text>
+  <text x="1554" y="796" class="box-text">ML config</text>
+
+  <rect x="80" y="780" width="350" height="150" class="box" fill="#fdebd8" />
+  <text x="104" y="825" class="box-title">EventBridge</text>
+  <text x="104" y="866" class="box-text">Detects new S3 uploads</text>
+
+  <rect x="500" y="780" width="350" height="150" class="box" fill="#fdebd8" />
+  <text x="524" y="825" class="box-title">Step Functions</text>
+  <text x="524" y="866" class="box-text">Workflow orchestration</text>
+  <text x="524" y="896" class="box-text">Success and failure branches</text>
+
+  <rect x="920" y="780" width="330" height="150" class="box" fill="#fdebd8" />
+  <text x="944" y="825" class="box-title">SQS Queue</text>
+  <text x="944" y="866" class="box-text">Async statement buffer</text>
+
+  <rect x="1320" y="780" width="400" height="200" class="box" fill="#fdebd8" />
+  <text x="1344" y="825" class="box-title">Processor Lambda</text>
+  <text x="1344" y="866" class="box-text">Parses statements</text>
+  <text x="1344" y="896" class="box-text">Infers categories</text>
+  <text x="1344" y="926" class="box-text">Writes transactions and alerts</text>
+
+  <rect x="1780" y="780" width="320" height="150" class="box" fill="#fdebd8" />
+  <text x="1804" y="825" class="box-title">Amazon SNS</text>
+  <text x="1804" y="866" class="box-text">Threshold alerts</text>
+  <text x="1804" y="896" class="box-text">Processed and failed email</text>
+
+  <rect x="780" y="1090" width="460" height="170" class="box" fill="#fff5d6" />
+  <text x="804" y="1135" class="box-title">CloudWatch</text>
+  <text x="804" y="1176" class="box-text">Dashboard</text>
+  <text x="804" y="1206" class="box-text">Lambda metrics and RDS health</text>
+  <text x="804" y="1236" class="box-text">Operational alarms</text>
+
+  <rect x="1320" y="1090" width="460" height="170" class="box" fill="#eee8ff" />
+  <text x="1344" y="1135" class="box-title">SageMaker-ready Path</text>
+  <text x="1344" y="1176" class="box-text">Prediction integration hook</text>
+  <text x="1344" y="1206" class="box-text">Optional hosted model endpoint</text>
+
+  <line x1="500" y1="285" x2="620" y2="285" class="arrow" marker-end="url(#arrowhead)" />
+  <line x1="970" y1="285" x2="1090" y2="285" class="arrow" marker-end="url(#arrowhead)" />
+  <line x1="1285" y1="360" x2="1285" y2="470" class="arrow" marker-end="url(#arrowhead)" />
+  <line x1="1480" y1="285" x2="1560" y2="285" class="arrow" marker-end="url(#arrowhead)" />
+
+  <line x1="275" y1="360" x2="275" y2="470" class="arrow" marker-end="url(#arrowhead)" />
+  <line x1="760" y1="360" x2="760" y2="470" class="arrow" marker-end="url(#arrowhead)" />
+  <line x1="470" y1="550" x2="540" y2="550" class="arrow" marker-end="url(#arrowhead)" />
+  <line x1="980" y1="550" x2="1080" y2="550" class="arrow" marker-end="url(#arrowhead)" />
+  <line x1="760" y1="650" x2="760" y2="740" class="arrow" marker-end="url(#arrowhead)" />
+  <line x1="1710" y1="620" x2="1710" y2="680" class="arrow" marker-end="url(#arrowhead)" />
+  <line x1="1270" y1="620" x2="1270" y2="680" class="arrow" marker-end="url(#arrowhead)" />
+
+  <line x1="1910" y1="620" x2="1910" y2="760" class="arrow" marker-end="url(#arrowhead)" />
+  <line x1="430" y1="855" x2="500" y2="855" class="arrow" marker-end="url(#arrowhead)" />
+  <line x1="850" y1="855" x2="920" y2="855" class="arrow" marker-end="url(#arrowhead)" />
+  <line x1="1250" y1="855" x2="1320" y2="855" class="arrow" marker-end="url(#arrowhead)" />
+  <line x1="1720" y1="845" x2="1780" y2="845" class="arrow" marker-end="url(#arrowhead)" />
+  <line x1="1410" y1="980" x2="1410" y2="620" class="arrow" marker-end="url(#arrowhead)" />
+  <line x1="1520" y1="980" x2="1520" y2="1090" class="arrow" marker-end="url(#arrowhead)" />
+  <line x1="1200" y1="830" x2="1100" y2="1090" class="arrow" marker-end="url(#arrowhead)" />
+  <line x1="760" y1="650" x2="890" y2="1090" class="arrow" marker-end="url(#arrowhead)" />
+
+  <text x="1185" y="245" class="label">App calls</text>
+  <text x="350" y="398" class="label">Authenticated app requests</text>
+  <text x="1640" y="250" class="label">Statement upload</text>
+  <text x="760" y="735" class="label">Event-driven processing</text>
+  <text x="1095" y="645" class="label">Reporting aggregates</text>
+
+  <text x="82" y="1315" class="section">Why it is smart:</text>
+  <text x="95" y="1360" class="bullet">• Automatic bank statement ingestion and parsing</text>
+  <text x="95" y="1388" class="bullet">• Merchant-based category inference and spending summaries</text>
+  <text x="95" y="1416" class="bullet">• Threshold alerts and event-driven workflow automation</text>
+</svg>

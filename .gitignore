@@ -1,0 +1,28 @@
+.DS_Store
+*.pyc
+*.pyo
+**/__pycache__/
+**/.pytest_cache/
+**/.mypy_cache/
+**/.venv/
+**/cdk.out/
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+*.local
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.aws/
+credentials
+*.log
+
+# Additional generated files
+node_modules/
+.next/
+dist/

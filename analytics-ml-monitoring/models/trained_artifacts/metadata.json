@@ -1,0 +1,14 @@
+{
+  "feature_columns": [
+    "transaction_count",
+    "average_transaction",
+    "change_from_previous_pct",
+    "top_category",
+    "top_merchant"
+  ],
+  "models": [
+    "spend_regressor.joblib",
+    "category_classifier.joblib",
+    "anomaly_detector.joblib"
+  ]
+}

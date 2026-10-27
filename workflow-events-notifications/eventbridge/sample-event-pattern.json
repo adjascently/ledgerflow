@@ -1,0 +1,7 @@
+{
+    "source": ["finance.tracker"],
+    "detail-type": ["statement.uploaded"],
+    "detail": {
+      "eventType": ["statement.uploaded"]
+    }
+  }

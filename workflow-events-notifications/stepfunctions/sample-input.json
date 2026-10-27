@@ -1,0 +1,7 @@
+{
+  "eventType": "statement.uploaded",
+  "userId": "user-123",
+  "uploadId": "upload-123",
+  "fileKey": "statements/user-123/upload-123.pdf",
+  "threshold": 1000
+}
